@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import API from "../api";
+import API, { getApiErrorMessage } from "../api";
 
 export const AuthContext = createContext();
 
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       return data.user;
     } catch (error) {
-      const message = error?.response?.data?.message || "Login failed";
+      const message = getApiErrorMessage(error, "Login failed");
       throw new Error(message);
     }
   };

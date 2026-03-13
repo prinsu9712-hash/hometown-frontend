@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import API from "../api";
+import API, { getApiErrorMessage } from "../api";
 import Layout from "../components/Layout";
 
 function Register() {
@@ -32,7 +32,7 @@ function Register() {
       await API.post("/auth/register", form);
       navigate("/login");
     } catch (error) {
-      setErrorMessage(error?.response?.data?.message || "Registration failed.");
+      setErrorMessage(getApiErrorMessage(error, "Registration failed."));
     } finally {
       setIsSubmitting(false);
     }
